@@ -1,0 +1,17 @@
+{
+    "version": "0.2.0",
+    "configurations": [
+      {
+        "name": "Python: Run",
+        "type": "python",
+        "request": "launch",
+        "program": "${file}",
+        "args": [
+          "--dataset-dir", "python_toolbox/evaluation/data/Ignatius",
+          "--traj-path", "python_toolbox/evaluation/data/Ignatius/Ignatius_COLMAP_SfM.log",
+          "--ply-path", "python_toolbox/evaluation/data/Ignatius/Ignatius_COLMAP.ply"  
+        ],
+        "console": "integratedTerminal"
+      }
+    ]
+  }

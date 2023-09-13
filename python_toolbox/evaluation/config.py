@@ -38,4 +38,5 @@ scenes_tau_dict = {
     "Ignatius": 0.003,
     "Meetingroom": 0.01,
     "Truck": 0.005,
+    "custom": 0.003 # for testing
 }

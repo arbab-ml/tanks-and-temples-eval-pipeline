@@ -45,7 +45,7 @@ import os
 import glob
 import numpy as np
 from numpy import matrix
-import read_model
+import read_write_model
 
 
 def write_SfM_log(T, i_map, filename):
@@ -81,7 +81,7 @@ def quat2rotmat(qvec):
 # Example: convert_COLMAP_to_log('sparse/0/', 'colmap.log', 'images/','jpg')
 def convert_COLMAP_to_log(filename, logfile_out, input_images, formatp):
     dirname = os.path.dirname(filename)
-    cameras, images, points3D = read_model.read_model(dirname, '.bin')
+    cameras, images, points3D = read_write_model.read_model(dirname, '.bin')
     jpg_list = glob.glob(input_images + '/*.' + formatp)
     jpg_list.sort()
     nr_of_images = len(jpg_list)
