@@ -104,6 +104,7 @@ def trajectory_alignment(map_file, traj_to_register, gt_traj_col, gt_trans,
 
 
 def crop_and_downsample(
+        name,
         pcd,
         crop_volume,
         down_sample_method="voxel",
@@ -113,6 +114,10 @@ def crop_and_downsample(
     pcd_copy = copy.deepcopy(pcd)
     pcd_copy.transform(trans)
     pcd_crop = crop_volume.crop_point_cloud(pcd_copy)
+    #saving the cropped point cloud with appropriate name prefix
+    o3d.io.write_point_cloud(name + ".ply", pcd_crop) #TODO: remove this line
+
+
     if down_sample_method == "voxel":
         # return voxel_down_sample(pcd_crop, voxel_size)
         return pcd_crop.voxel_down_sample(voxel_size)
@@ -137,11 +142,13 @@ def registration_unif(
     if verbose:
         print("[Registration] threshold: %f" % threshold)
         o3d.utility.set_verbosity_level(o3d.utility.VerbosityLevel.Debug)
-    s = crop_and_downsample(source,
+    s = crop_and_downsample("from_source_registration_unif",
+                            source,
                             crop_volume,
                             down_sample_method="uniform",
                             trans=init_trans)
-    t = crop_and_downsample(gt_target,
+    t = crop_and_downsample("from_target_registration_unif",
+                            gt_target,
                             crop_volume,
                             down_sample_method="uniform")
     reg = o3d.registration.registration_icp(
@@ -171,6 +178,7 @@ def registration_vol_ds(
               (voxel_size, threshold))
         o3d.utility.set_verbosity_level(o3d.utility.VerbosityLevel.Debug)
     s = crop_and_downsample(
+        "from_source_registration_vol_ds",
         source,
         crop_volume,
         down_sample_method="voxel",
@@ -178,6 +186,7 @@ def registration_vol_ds(
         trans=init_trans,
     )
     t = crop_and_downsample(
+        "from_target_registration_vol_ds",
         gt_target,
         crop_volume,
         down_sample_method="voxel",
